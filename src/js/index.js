@@ -18,7 +18,7 @@ function hideLoader() {
 }
 
 function showError() {
-  Notify.failure('Oops! Something went wrong! Try reloading the page!');
+  Notify.failure('Упс! Щось пішло не так! Спробуйте перезавантажити сторінку!');
 }
 
 function clearCatInfo() {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div>
                 <h2>${cat.breed}</h2>
                 <p>${cat.description}</p>
-                <p><b>Temperament:</b>${cat.temperament}</p>
+                <p><b>Темперамент:</b> ${cat.temperament}</p>
             </div>      
         `;
         catInfo.insertAdjacentHTML('afterbegin', cat.html);

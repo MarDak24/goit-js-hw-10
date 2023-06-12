@@ -23,7 +23,8 @@ async function fetchBreeds() {
       };
     });
   } catch (error) {
-    return console.log(error);
+    console.log(error);
+    return [];
   }
 }
 
@@ -35,29 +36,29 @@ async function fetchCatByBreed(breedId) {
     },
   };
 
-  return fetch(url, params)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data.length > 0) {
-        const cat = data[0];
-        const breedInfo = cat.breeds[0];
+  try {
+    const response = await fetch(url, params);
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    if (data.length > 0) {
+      const cat = data[0];
+      const breedInfo = cat.breeds[0];
 
-        return {
-          imageUrl: cat.url,
-          breed: breedInfo.name,
-          description: breedInfo.description,
-          temperament: breedInfo.temperament,
-        };
-      } else {
-        throw new Error('No cat found for the specified breed.');
-      }
-    })
-    .catch(error => console.log(error));
+      return {
+        imageUrl: cat.url,
+        breed: breedInfo.name,
+        description: breedInfo.description,
+        temperament: breedInfo.temperament,
+      };
+    } else {
+      throw new Error('Не знайдено кота для вказаної породи.');
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
 
 export { fetchBreeds, fetchCatByBreed };
